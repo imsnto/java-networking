@@ -13,17 +13,18 @@ public class Server {
         while(true){
             Socket socket = serverSocket.accept();
             System.out.println("client connected..");
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-            ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+            while(true) {
+                ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+                ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
 
-            // read from client
-            Object clientMsg = ois.readObject();
-            System.out.println("From client " + (String) clientMsg);
+                // read from client
+                Object clientMsg = ois.readObject();
+                System.out.println("From client " + (String) clientMsg);
 
-            String serverMsg = (String) ((String) clientMsg).toUpperCase();
-            // send to client
-            oos.writeObject(serverMsg);
-
+                String serverMsg = (String) ((String) clientMsg).toUpperCase();
+                // send to client
+                oos.writeObject(serverMsg);
+            }
         }
     }
 }
